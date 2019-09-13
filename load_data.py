@@ -1,7 +1,7 @@
 from contextlib import closing
 from vertica_python import connect
 import pandas as pd
-from config import ConnectToVerticaDB as Con_vert
+from config import ConnectToVerticaDB as Con_vert, CityDict
 
 
 def TotalFraudTable(date_from, date_to, city_id, week, year):
@@ -22,13 +22,10 @@ def TotalFraudTable(date_from, date_to, city_id, week, year):
             df = pd.read_sql_query(
                 sql.read(), con, params=[_date_from, _date_to, _city_id, _week, _year])
 
-        df.loc[df['Успешных за вычетом фродовых'] >= 180, 'К списанию'] = 0
-        df.loc[df['Успешных за вычетом фродовых'] < 180,
-               'К списанию'] = df['Получен бонус план'] - 600
-        df.loc[df['Успешных за вычетом фродовых'] < 160,
-               'К списанию'] = df['Получен бонус план'] - 400
-        df.loc[df['Успешных за вычетом фродовых'] < 130,
-               'К списанию'] = df['Получен бонус план']
+        df.loc[df['Успешных за вычетом фродовых'] >= CityDict.city_bonus_plan_dict[_city_id][0][0], 'К списанию'] = 0
+        for i in CityDict.city_bonus_plan_dict[_city_id]:
+            df.loc[df['Успешных за вычетом фродовых'] < i[0],
+                   'К списанию'] = df['Получен бонус план'] - i[2]
         df = df.drop_duplicates(
             subset=['Длинный позывной', 'Короткий позывной'], keep='first')
         return df
