@@ -1,7 +1,7 @@
 from contextlib import closing
 from vertica_python import connect
 import pandas as pd
-from config import _ConnectToVerticaDB as Con_vert
+from config import ConnectToVerticaDB as Con_vert
 
 def TotalFraudTable(date_from,date_to,city_id,week,year):
     _date_from = date_from
