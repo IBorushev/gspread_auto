@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.env
+test.py
 *.csv
 MyTestApi-ef560dee70e4.json
 config.py
