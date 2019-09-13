@@ -1,9 +1,12 @@
-# class Config:
-#    SECRET_KEY = ''
-# class Connect_to_VerticaDB(Config):
+import os
+
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 class Connect_to_VerticaDB():
-    host='IP or DNS'
+    host='IP or DNS' # or arg in your .env file os.getenv('host')
     port= 5433
     user= 'user'
     password= 'password'
