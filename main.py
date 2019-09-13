@@ -1,28 +1,28 @@
 import gspread
 from isoweek import Week
 from oauth2client.service_account import ServiceAccountCredentials
-from _select import TotalFraudTable, FraudDetalizationTable
-from config import _Credentials, _CityDict
+from load_data import TotalFraudTable, FraudDetalizationTable
+from config import Credentials, CityDict
 
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name(_Credentials.credentials, scope)
+credentials = ServiceAccountCredentials.from_json_keyfile_name(Credentials.credentials, scope)
 
 gc = gspread.authorize(credentials)
 
 class ManualUpdate():
     # block 1
     print('Какой город будем обновлять?')
-    for i in _CityDict.city_dict.items():
+    for i in CityDict.city_dict.items():
         print('№:' + i[0], i[1][0], i[1][1])
 
     user_city_id = input('Введите номер города: ')
 
 
 
-    city_id = _CityDict.city_dict[user_city_id][1]
+    city_id = CityDict.city_dict[user_city_id][1]
 
     week, year = input('Через пробел укажите номер недели и год: ').split()
 
@@ -31,7 +31,7 @@ class ManualUpdate():
     name_sheet = date_from[:4] + '.' + date_from[4:6] + '.' + date_from[6:] + ' - ' \
                                 + date_to[:4] + '.' + date_to[4:6] + '.' + date_to[6:]
     # block 2
-    wks = gc.open_by_key(_CityDict.city_gspread_key[user_city_id])
+    wks = gc.open_by_key(CityDict.city_gspread_key[user_city_id])
 
     # Checking a sheet with the name *** already exists
     # If the sheet not exists then create the new sheet with name ***
