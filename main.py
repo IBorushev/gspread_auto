@@ -3,6 +3,7 @@ import sys
 
 import gspread
 from isoweek import Week
+from datetime import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
 from config import CityDict, Credentials
@@ -85,18 +86,25 @@ class Update():
             }
         )
 
-    def Auto(self, city='86137', week='1', year='2019'):
+    def Auto(self, city, week='1', year='2019'):
+
+        if week == '1':
+            week = datetime.today().isocalendar()[1] - 1
+
+        if year == '2019':
+            year = datetime.today().isocalendar()[0]
+
+        city = str(city)
 
         # block 1
-
-        city_id, week, year = str(city), str(week), str(year)
-
         date_from, date_to = Week(int(year), int(week)).monday().strftime('%Y%m%d'), \
             Week(int(year), int(week)).sunday().strftime('%Y%m%d')
         name_sheet = date_from[:4] + '.' + date_from[4:6] + '.' + date_from[6:] + ' - ' \
             + date_to[:4] + '.' + date_to[4:6] + '.' + date_to[6:]
+
+
         # block 2
-        wks = gc.open_by_key(CityDict.city_gspread_key[city_id])
+        wks = gc.open_by_key(CityDict.city_gspread_key[city])
 
         # Checking a sheet with the name *** already exists
         # If the sheet not exists then create the new sheet with name ***
@@ -115,7 +123,7 @@ class Update():
         # End check
 
         total_fraud_table = TotalFraudTable(
-            date_from, date_to, city_id, week, year).values.tolist()
+            date_from, date_to, city, week, year).values.tolist()
 
         wks.values_update(
             name_sheet + '!A4',
@@ -135,7 +143,7 @@ class Update():
         drv_ids = tuple(drv_ids)
 
         fraud_detalization_table = FraudDetalizationTable(
-            date_from, date_to, city_id, drv_ids).values.tolist()
+            date_from, date_to, city, drv_ids).values.tolist()
 
         wks.values_update(
             name_sheet + '!K4',
