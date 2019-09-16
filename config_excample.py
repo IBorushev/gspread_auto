@@ -20,14 +20,14 @@ class Credentials():
 
 
 class CityDict():
-    city_dict = {'0': ['city_name', 'city_phone_code'],
-                 '1': ['city_name', 'city_phone_code']}
-    city_gspread_key = {'0': 'Google spread key for cityID 0 in city_dict',
-                        '1': 'Google spread key for cityID 1 in city_dict'}
+    city_dict = {'city_phone_code0': ['city_name'],
+                 'city_phone_code1': ['city_name']}
+    city_gspread_key = {'city_phone_code0': 'Google spread key for cityID 0 in city_dict',
+                        'city_phone_code1': 'Google spread key for cityID 1 in city_dict'}
 
     city_bonus_plan_dict = {
         # each [] = one step in bonus-plan
-        'city_phone_code': [['trips-need', 'bonus', 'previous-bonus'], ['', '', ''], ['', '', '']],
+        'city_phone_code0': [['trips-need', 'bonus', 'previous-bonus'], ['', '', ''], ['', '', '']],
         # starts at max bonus and to min bonus
-        'city_phone_code': [[180, 800, 600], [160, 600, 400], [130, 400, 0]]
+        'city_phone_code1': [[180, 800, 600], [160, 600, 400], [130, 400, 0]]
     }
