@@ -127,7 +127,7 @@ class Update():
         # End check
 
         total_fraud_table = TotalFraudTable(
-            date_from, date_to, city, week, year).values.tolist()
+            date_from, date_to, city, week, year, min_trips_for_bonus).values.tolist()
 
         wks.values_update(
             name_sheet + '!A4',

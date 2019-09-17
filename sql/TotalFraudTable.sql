@@ -26,7 +26,7 @@ FROM
         ,*
     FROM facts.FS_Drivers_period_counter_history main
     LEFT JOIN args ON TRUE
-    WHERE "week" = %s AND "year" = %s AND launch_region_id = city_id AND successful_order_counter >= 130
+    WHERE "week" = %s AND "year" = %s AND launch_region_id = city_id AND successful_order_counter >= %s
     ) temp
 LEFT JOIN
     (SELECT driver_id, SUM(fraud) AS fraud
