@@ -18,7 +18,7 @@ def TotalFraudTable(date_from, date_to, city_id, week, year):
                          read_timeout=Con_vert.read_timeout)
                  ) as con:
 
-        with open('sql/TotalFraudTable.sql', 'r') as sql:
+        with open('/home/iborushev/gspread_auto/sql/TotalFraudTable.sql', 'r') as sql:
             df = pd.read_sql_query(
                 sql.read(), con, params=[_date_from, _date_to, _city_id, _week, _year])
 
@@ -44,7 +44,7 @@ def FraudDetalizationTable(date_from, date_to, city_id, drv_ids):
                          read_timeout=Con_vert.read_timeout)
                  ) as con:
 
-        with open('sql/FraudDetalizationTable.sql', 'r') as sql:
+        with open('/home/iborushev/gspread_auto/sql/FraudDetalizationTable.sql', 'r') as sql:
             df = pd.read_sql_query(
                 sql.read(), con, params=[_date_from, _date_to, _city_id, _drv_ids])
 
