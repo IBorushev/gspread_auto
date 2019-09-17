@@ -103,7 +103,6 @@ class Update():
             + date_to[:4] + '.' + date_to[4:6] + '.' + date_to[6:]
 
         min_trips_for_bonus = CityDict.city_bonus_plan_dict[city][-1][0]
-        print(min_trips_for_bonus)
 
 
         # block 2
