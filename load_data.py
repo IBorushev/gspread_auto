@@ -4,13 +4,12 @@ import pandas as pd
 from config import ConnectToVerticaDB as Con_vert, CityDict
 
 
-def TotalFraudTable(date_from, date_to, city_id, week, year, min_trips_for_bonus):
+def TotalFraudTable(date_from, date_to, city_id, week, year):
     _date_from = date_from
     _date_to = date_to
     _city_id = city_id
     _week = week
     _year = year
-    _min_trips_for_bonus = min_trips_for_bonus
     with closing(connect(host=Con_vert.host,
                          port=Con_vert.port,
                          user=Con_vert.user,
@@ -21,7 +20,7 @@ def TotalFraudTable(date_from, date_to, city_id, week, year, min_trips_for_bonus
 
         with open('/home/iborushev/gspread_auto/sql/TotalFraudTable.sql', 'r') as sql:
             df = pd.read_sql_query(
-                sql.read(), con, params=[_date_from, _date_to, _city_id, _week, _year, _min_trips_for_bonus])
+                sql.read(), con, params=[_date_from, _date_to, _city_id, _week, _year])
 
         df.loc[df['Успешных за вычетом фродовых'] >= CityDict.city_bonus_plan_dict[_city_id][0][0], 'К списанию'] = 0
         for i in CityDict.city_bonus_plan_dict[_city_id]:

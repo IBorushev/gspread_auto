@@ -104,8 +104,8 @@ class Update():
         name_sheet = date_from[:4] + '.' + date_from[4:6] + '.' + date_from[6:] + ' - ' \
             + date_to[:4] + '.' + date_to[4:6] + '.' + date_to[6:]
 
-        min_trips_for_bonus = CityDict.city_bonus_plan_dict[city][-1][0]
 
+        min_trips_for_bonus = CityDict.city_bonus_plan_dict[city][-1][0]
 
         # block 2
         wks = gc.open_by_key(CityDict.city_gspread_key[city])
@@ -127,7 +127,7 @@ class Update():
         # End check
 
         total_fraud_table = TotalFraudTable(
-            date_from, date_to, city, week, year, min_trips_for_bonus).values.tolist()
+            date_from, date_to, city, week, year).values.tolist()
 
         wks.values_update(
             name_sheet + '!A4',
