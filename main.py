@@ -25,7 +25,7 @@ class Update():
         for i in CityDict.city_dict.items():
             print('Код:' + i[0], i[1][0])
 
-        city_id = input('Введите код города: ')
+        city = input('Введите код города: ')
 
         week, year = input('Через пробел укажите номер недели и год: ').split()
 
@@ -37,7 +37,7 @@ class Update():
         min_trips_for_bonus = CityDict.city_bonus_plan_dict[city][-1][0]
 
         # block 2
-        wks = gc.open_by_key(CityDict.city_gspread_key[city_id])
+        wks = gc.open_by_key(CityDict.city_gspread_key[city])
 
         # Checking a sheet with the name *** already exists
         # If the sheet not exists then create the new sheet with name ***
@@ -56,7 +56,7 @@ class Update():
         # End check
 
         total_fraud_table = TotalFraudTable(
-            date_from, date_to, city_id, week, year, min_trips_for_bonus).values.tolist()
+            date_from, date_to, city, week, year, min_trips_for_bonus).values.tolist()
 
         wks.values_update(
             name_sheet + '!A4',
@@ -76,7 +76,7 @@ class Update():
         drv_ids = tuple(drv_ids)
 
         fraud_detalization_table = FraudDetalizationTable(
-            date_from, date_to, city_id, drv_ids).values.tolist()
+            date_from, date_to, city, drv_ids).values.tolist()
 
         wks.values_update(
             name_sheet + '!K4',
