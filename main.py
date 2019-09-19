@@ -25,11 +25,7 @@ class Update():
         for i in CityDict.city_dict.items():
             print('Код:' + i[0], i[1][0])
 
-<<<<<<< HEAD
-        city_id = input('Введите код города: ')
-=======
         city = input('Введите код города: ')
->>>>>>> fix-manual-city-not-defined
 
         week, year = input('Через пробел укажите номер недели и год: ').split()
 
@@ -41,11 +37,7 @@ class Update():
         min_trips_for_bonus = CityDict.city_bonus_plan_dict[city][-1][0]
 
         # block 2
-<<<<<<< HEAD
-        wks = gc.open_by_key(CityDict.city_gspread_key[city_id])
-=======
         wks = gc.open_by_key(CityDict.city_gspread_key[city])
->>>>>>> fix-manual-city-not-defined
 
         # Checking a sheet with the name *** already exists
         # If the sheet not exists then create the new sheet with name ***
@@ -64,11 +56,8 @@ class Update():
         # End check
 
         total_fraud_table = TotalFraudTable(
-<<<<<<< HEAD
-            date_from, date_to, city_id, week, year, min_trips_for_bonus).values.tolist()
-=======
+
             date_from, date_to, city, week, year, min_trips_for_bonus).values.tolist()
->>>>>>> fix-manual-city-not-defined
 
         wks.values_update(
             name_sheet + '!A4',
@@ -88,11 +77,7 @@ class Update():
         drv_ids = tuple(drv_ids)
 
         fraud_detalization_table = FraudDetalizationTable(
-<<<<<<< HEAD
-            date_from, date_to, city_id, drv_ids).values.tolist()
-=======
             date_from, date_to, city, drv_ids).values.tolist()
->>>>>>> fix-manual-city-not-defined
 
         wks.values_update(
             name_sheet + '!K4',
@@ -119,7 +104,6 @@ class Update():
             Week(int(year), int(week)).sunday().strftime('%Y%m%d')
         name_sheet = date_from[:4] + '.' + date_from[4:6] + '.' + date_from[6:] + ' - ' \
             + date_to[:4] + '.' + date_to[4:6] + '.' + date_to[6:]
-
 
         min_trips_for_bonus = CityDict.city_bonus_plan_dict[city][-1][0]
 
