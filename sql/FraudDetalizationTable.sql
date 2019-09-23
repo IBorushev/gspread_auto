@@ -30,6 +30,6 @@ LEFT JOIN facts.FS_Drivers drv
 WHERE
     fo.launch_region_id = city_id
     AND fo."date" BETWEEN date_from AND date_to
-    AND resolution != 'NO'
+    AND (resolution IS NULL OR resolution != 'NO')
     AND o.driver_id IN %s
 ORDER BY o.driver_id DESC
