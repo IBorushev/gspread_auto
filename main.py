@@ -109,7 +109,7 @@ def loadData(date_from, date_to, city, week, year, min_trips_for_bonus):
 
     drv_ids = [0, 0]
     for i in total_fraud_table:
-        if i[8] > 0:
+        if i[8] != 0:
             drv_ids.append(i[1])
     drv_ids = tuple(drv_ids)
 

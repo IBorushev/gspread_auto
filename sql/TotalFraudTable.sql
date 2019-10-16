@@ -10,9 +10,7 @@ SELECT
     , fraud_orders AS "Поездок отобрано на фрод"
     , verified_orders AS "Проверено поездок"
     , ISNULL(fraud.fraud, '0') AS "Подтверждённых фрод поездок"
-    --, successful_order_counter - ISNULL(fraud.fraud, '0') AS "Успешных за вычетом фродовых"
     , successful_order_counter - ISNULL(fraud_orders, '0') AS "Успешных за вычетом фродовых"
-    , bonus / 100 AS "Получен бонус план"
 FROM
 (SELECT
     temp.driver_id
@@ -20,7 +18,6 @@ FROM
     , successful_order_counter
     , ISNULL(verified.verified, '0') verified_orders
     , ISNULL(fraud.fraud, '0') fraud_orders
-    , bonus
 FROM 
     (SELECT 
         ROW_NUMBER() OVER(PARTITION BY driver_ext_id ORDER BY update_ts DESC) rnk
