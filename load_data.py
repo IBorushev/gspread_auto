@@ -19,12 +19,18 @@ def TotalFraudTable(date_from, date_to, city_id, week, year, min_trips_for_bonus
                          read_timeout=Con_vert.read_timeout)
                  ) as con:
 
-
         with open('./sql/TotalFraudTable.sql', 'r') as sql:
             df = pd.read_sql_query(
                 sql.read(), con, params=[_date_from, _date_to, _city_id, _week, _year, _min_trips_for_bonus])
 
-        df.loc[df['Успешных за вычетом фродовых'] >= CityDict.city_bonus_plan_dict[_city_id][0][0], 'К списанию'] = 0
+        df.loc[df['Успешных поездок'] >= CityDict.city_bonus_plan_dict[_city_id][0]
+               [0], 'Получен бонус план'] = CityDict.city_bonus_plan_dict[_city_id][0][1]
+        for i in CityDict.city_bonus_plan_dict[_city_id]:
+            df.loc[df['Успешных поездок'] < i[0],
+                   'Получен бонус план'] = i[2]
+
+        df.loc[df['Успешных за вычетом фродовых'] >=
+               CityDict.city_bonus_plan_dict[_city_id][0][0], 'К списанию'] = 0
         for i in CityDict.city_bonus_plan_dict[_city_id]:
             df.loc[df['Успешных за вычетом фродовых'] < i[0],
                    'К списанию'] = df['Получен бонус план'] - i[2]
@@ -45,7 +51,6 @@ def FraudDetalizationTable(date_from, date_to, city_id, drv_ids):
                          data_base=Con_vert.data_base,
                          read_timeout=Con_vert.read_timeout)
                  ) as con:
-
 
         with open('./sql/FraudDetalizationTable.sql', 'r') as sql:
             df = pd.read_sql_query(
